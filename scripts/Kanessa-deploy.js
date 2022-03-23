@@ -14,7 +14,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Kanessa = await hre.ethers.getContractFactory("Kanessa");
+  const Kanessa = await hre.ethers.getContractFactory("KanessaNFT");
   const kanessa = await Kanessa.deploy();
 
   await kanessa.deployed();

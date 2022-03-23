@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract Kanessa is ERC721, Ownable {
+contract KanessaNFT is ERC721, Ownable {
     using Counters for Counters.Counter;
     using Strings for uint256;
 
@@ -15,14 +15,17 @@ contract Kanessa is ERC721, Ownable {
     bool private _whitelistActive;
     bytes32 private _root;
 
+    uint256 private presalePrice = 2 * 10 ** 16; // 0.02 eth
+    uint256 private publicSalePrice  = 5 * 10 ** 16; // 0.05 eth
+
     string private _strBaseTokenURI;
 
     event WhitelistModeChanged(bool isWhiteList);
     event MintNFT(address indexed _to, uint256 _number);
 
-    constructor() ERC721("Kanessa(Plus size lady)", "PSL") {
+    constructor() ERC721("KanessaNFT - Plus Size Lady)", "PSL") {
         _root = 0x7036c18b7148a5450c499d5c83cf6dac05902701bbbca399f37345095ecf0dcb;
-        _strBaseTokenURI = "https://gateway.pinata.cloud/ipfs/Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY/";
+        _strBaseTokenURI = "https://kanessanft.mypinata.cloud/ipfs/QmTovvXF7ACe1UTcWa3JuTuWL2JJ4nELSEyyWSfMTPctsP/";
         _whitelistActive = true;
     }
 
@@ -36,10 +39,10 @@ contract Kanessa is ERC721, Ownable {
 
     function price() public view returns (uint256) {
         if (_whitelistActive) {
-            return 2 * 10**16;
+            return presalePrice;
         }
 
-        return 5 * 10**16;
+        return publicSalePrice;
     }
 
     function safeMint(address to, uint256 number) public onlyOwner {
@@ -77,7 +80,7 @@ contract Kanessa is ERC721, Ownable {
 
     function payToMint(address recipiant, uint256 number) public payable {
         require(!_whitelistActive, "Public mint is not started yet!");
-        require(msg.value >= price() * number, "Need to pay up!");
+        require(msg.value >= price() * number, "Money is not enough!");
 
         for (uint256 i = 0; i < number; i++) {
             uint256 newItemid = _tokenIdCounter.current();
@@ -100,7 +103,7 @@ contract Kanessa is ERC721, Ownable {
 
         require(isWhitelisted, "Not whitelisted");
 
-        require(msg.value >= price() * number, "Need to pay up!");
+        require(msg.value >= price() * number, "Money is not enough!");
 
         for (uint256 i = 0; i < number; i++) {
             uint256 newItemid = _tokenIdCounter.current();
