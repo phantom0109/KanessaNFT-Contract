@@ -25,7 +25,7 @@ contract KanessaNFT is ERC721, Ownable {
 
     constructor() ERC721("KanessaNFT - Plus Size Lady)", "PSL") {
         _root = 0x7036c18b7148a5450c499d5c83cf6dac05902701bbbca399f37345095ecf0dcb;
-        _strBaseTokenURI = "https://kanessanft.mypinata.cloud/ipfs/QmTovvXF7ACe1UTcWa3JuTuWL2JJ4nELSEyyWSfMTPctsP/";
+        _strBaseTokenURI = "https://";
         _whitelistActive = true;
     }
 
